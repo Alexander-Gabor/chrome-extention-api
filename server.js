@@ -23,7 +23,19 @@ function sendJson(res, statusCode, payload) {
 }
 
 const server = http.createServer(async (req, res) => {
-  if (req.url === '/api/restaurants') {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') {
+    res.writeHead(204);
+    res.end();
+    return;
+  }
+
+  const requestUrl = new URL(req.url ?? '/', 'http://0.0.0.0');
+
+  if (requestUrl.pathname.startsWith('/api/restaurants')) {
     const apiKey = HARDCODED_GEOAPIFY_API_KEY;
 
     try {
@@ -59,7 +71,7 @@ const server = http.createServer(async (req, res) => {
   }
 
   try {
-    const urlPath = req.url === '/' ? '/index.html' : req.url;
+    const urlPath = requestUrl.pathname === '/' ? '/index.html' : requestUrl.pathname;
     const safePath = path.normalize(urlPath).replace(/^\/+/, '');
     const filePath = path.join(publicDir, safePath);
 
@@ -79,9 +91,8 @@ const server = http.createServer(async (req, res) => {
   }
 });
 
-const port = process.env.PORT || 3000;
-const host = '127.0.0.1';
+const PORT = process.env.PORT || 3000;
 
-server.listen(port, host, () => {
-  console.log(`Server running at http://${host}:${port}`);
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`Listening on ${PORT}`);
 });
