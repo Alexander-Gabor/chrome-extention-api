@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stockholm Restaurant Generator</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <section class="panel">
+        <h1>Stockholm Restaurant Generator</h1>
+        <p>Click generate to fetch a random Stockholm restaurant from Geoapify.</p>
+
+        <button id="generateBtn" type="button">Generate New</button>
+
+        <p id="status" class="status" aria-live="polite"></p>
+
+        <article id="resultCard" class="card hidden" aria-live="polite">
+          <h2 id="name">-</h2>
+          <p><strong>Address:</strong> <span id="address">-</span></p>
+          <p><strong>Category:</strong> <span id="category">-</span></p>
+          <a id="mapsLink" href="#" target="_blank" rel="noopener noreferrer">Open in Maps</a>
+        </article>
+      </section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
